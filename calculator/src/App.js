@@ -18,6 +18,7 @@ const Calculator = () => {
   const [shownHistory, setShownHistory] = useState("NO HISTORY");
   const [tip, setTip] = useState(tips[0]);
   const [pressedButton, setPressedButton] = useState("");
+  const [powerOn, setPowerOn] = useState(true)
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -28,6 +29,12 @@ const Calculator = () => {
     }, 10000);
     return () => clearInterval(interval);
   }, []);
+
+  const handleTogglePower = () => {
+  setPowerOn(!powerOn);
+  setEntryVal(powerOn ? "" : "0");
+  setShownHistory(powerOn ? "OFF" : "READY");
+};
 
   const handleEntry = (val) => {
     if (entryVal.length >= maxLength) return;
@@ -120,6 +127,7 @@ const Calculator = () => {
     { id: "clearEntry", label: "CE", onClick: handleClearEntry },
     { id: "clearHistory", label: "C", onClick: handleClearHistory },
     { id: "backspace", label: "←", onClick: handleBackspace },
+    { id: "power", label: powerOn ? "OFF" : "ON", onClick: handleTogglePower }
   ];
 
   const handleMouseDown = (id) => setPressedButton(id);
